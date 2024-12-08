@@ -5,7 +5,7 @@
 			{
 				"model": {
 					"type": "minecraft:model",
-					"model": "mob_soup:item/javelin"
+					"model": "mob_soup:item/javelin/default"
 				},
 				"when": [
 					"gui",
@@ -18,16 +18,16 @@
 			"type": "minecraft:condition",
 			"on_false": {
 				"type": "minecraft:special",
-				"base": "minecraft:item/trident_in_hand",
+				"base": "mob_soup:item/javelin/in_hand",
 				"model": {
-					"type": "minecraft:trident"
+					"type": "mob_soup:javelin"
 				}
 			},
 			"on_true": {
 				"type": "minecraft:special",
-				"base": "minecraft:item/trident_throwing",
+				"base": "mob_soup:item/javelin/throwing",
 				"model": {
-					"type": "minecraft:trident"
+					"type": "mob_soup:javelin"
 				}
 			},
 			"property": "minecraft:using_item"

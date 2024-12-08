@@ -3,14 +3,14 @@
 		"type": "minecraft:condition",
 		"on_false": {
 			"type": "minecraft:special",
-			"base": "mob_soup:item/scotum",
+			"base": "mob_soup:item/scutum/standing",
 			"model": {
 				"type": "minecraft:shield"
 			}
 		},
 		"on_true": {
 			"type": "minecraft:special",
-			"base": "mob_soup:item/scotum_blocking",
+			"base": "mob_soup:item/scutum/blocking",
 			"model": {
 				"type": "minecraft:shield"
 			}

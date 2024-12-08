@@ -2,6 +2,7 @@ package com.sindercube.mobSoup.registry;
 
 import com.sindercube.mobSoup.MobSoup;
 import com.sindercube.mobSoup.content.entity.CenturionEntity;
+import com.sindercube.mobSoup.content.entity.JavelinEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -24,12 +25,20 @@ public class ModEntityTypes {
     }
 
     public static final EntityType<CenturionEntity> CENTURION = register("centurion",
-            EntityType.Builder.create(CenturionEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(0.7F, 2.4F)
-                    .eyeHeight(2.1F)
-                    .vehicleAttachment(-0.875F)
-                    .maxTrackingRange(8)
+		EntityType.Builder.create(CenturionEntity::new, SpawnGroup.MONSTER)
+			.dimensions(0.6F, 1.99F)
+			.eyeHeight(1.74F)
+			.vehicleAttachment(-0.875F)
+			.maxTrackingRange(8)
     );
+	public static final EntityType<JavelinEntity> JAVELIN = register("javelin",
+		EntityType.Builder.<JavelinEntity>create(JavelinEntity::new, SpawnGroup.MISC)
+			.dropsNothing()
+			.dimensions(0.5F, 0.5F)
+			.eyeHeight(0.13F)
+			.maxTrackingRange(4)
+			.trackingTickInterval(20)
+	);
 
     private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
         Identifier id = MobSoup.of(name);

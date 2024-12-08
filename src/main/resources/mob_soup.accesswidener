@@ -1,3 +1,7 @@
 accessWidener v2 named
 
 extendable method net/minecraft/entity/mob/AbstractSkeletonEntity getStepSound ()Lnet/minecraft/sound/SoundEvent;
+accessible field net/minecraft/client/render/entity/TridentEntityRenderer model Lnet/minecraft/client/render/entity/model/TridentEntityModel;
+mutable field net/minecraft/client/render/entity/TridentEntityRenderer model Lnet/minecraft/client/render/entity/model/TridentEntityModel;
+#accessible method net/minecraft/entity/projectile/PersistentProjectileEntity <init> (Lnet/minecraft/entity/EntityType;DDDLnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V
+accessible method net/minecraft/entity/projectile/PersistentProjectileEntity <init> (Lnet/minecraft/entity/EntityType;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)V

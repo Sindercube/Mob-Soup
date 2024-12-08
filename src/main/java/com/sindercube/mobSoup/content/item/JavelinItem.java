@@ -1,23 +1,70 @@
 package com.sindercube.mobSoup.content.item;
 
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import com.sindercube.mobSoup.content.entity.JavelinEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.TridentItem;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
+import net.minecraft.world.World;
 
-public class JavelinItem extends TridentItem {
+public class JavelinItem extends TridentItem implements ThrowableItem {
 
     public JavelinItem(Item.Settings settings) {
         super(settings);
     }
 
-	public static AttributeModifiersComponent createAttributeModifiers() {
-		return AttributeModifiersComponent.builder()
-			.add(EntityAttributes.ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, 2, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-			.add(EntityAttributes.ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, -2.9, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
-			.build();
+	@Override
+	public boolean onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+		if (!(user instanceof PlayerEntity player)) return false;
+
+		int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
+		if (useTime < 10) return false;
+
+		if (stack.willBreakNextUse()) return false;
+
+		player.incrementStat(Stats.USED.getOrCreateStat(this));
+		if (!(world instanceof ServerWorld serverWorld)) return false;
+
+		stack.damage(1, player);
+		JavelinEntity javelin = ProjectileEntity.spawnWithVelocity(
+			JavelinEntity::new,
+			serverWorld,
+			stack.copyWithCount(1),
+			player,
+			0.0F, 2.5F, 1.0F
+		);
+		stack.decrement(1);
+		if (player.isInCreativeMode()) {
+			javelin.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+		}
+//		else {
+//			player.getInventory().removeOne(stack.copyWithCount(1));
+//		}
+
+		world.playSoundFromEntity(null, javelin, SoundEvents.ITEM_TRIDENT_THROW.value(), SoundCategory.PLAYERS, 1.0F, 1.0F);
+		return true;
+	}
+
+	@Override
+	public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+		JavelinEntity javelin = new JavelinEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack.copyWithCount(1));
+		javelin.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+		return javelin;
+	}
+
+	@Override
+	public TridentEntity create(World world, LivingEntity owner, ItemStack stack) {
+		return new TridentEntity(world, owner, stack);
 	}
 
 }

@@ -27,24 +27,25 @@ public class ModItems {
 	public static final Item THE_MOB_SOUP = register("the_mob_soup",
 		Item::new,
 		new Item.Settings()
+			.rarity(Rarity.EPIC)
 			.food(new FoodComponent(4, 4, false))
 	);
     public static final Item GALEA = register("galea",
             settings -> new ArmorItem(ModArmorMaterials.CENTURION, EquipmentType.HELMET, settings),
             new Item.Settings()
+				.rarity(Rarity.RARE)
     );
     public static final Item JAVELIN = register("javelin",
             JavelinItem::new,
             new Item.Settings()
 				.rarity(Rarity.RARE)
 				.maxCount(3)
-				.attributeModifiers(JavelinItem.createAttributeModifiers())
-				.component(DataComponentTypes.TOOL, JavelinItem.createToolComponent())
 				.enchantable(1)
     );
     public static final Item SCUTUM = register("scutum",
             ScutumItem::new,
             new Item.Settings()
+				.rarity(Rarity.RARE)
 				.maxDamage(512)
 				.repairable(ItemTags.WOODEN_TOOL_MATERIALS)
 				.equippableUnswappable(EquipmentSlot.OFFHAND)
