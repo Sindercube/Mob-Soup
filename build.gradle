@@ -20,7 +20,7 @@ loom {
 
 fabricApi {
 	configureDataGeneration {
-//		client = true
+		client = true
 		createSourceSet = true
 	}
 }

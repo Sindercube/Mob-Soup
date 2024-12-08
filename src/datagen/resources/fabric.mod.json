@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "mob_soup-datagen",
-	"version": "${version}",
+	"version": "0",
 
 	"entrypoints": {
 		"fabric-datagen": [ "com.sindercube.mobSoup.datagen.MobSoupDatagen" ]
