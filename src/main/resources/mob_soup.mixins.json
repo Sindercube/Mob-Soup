@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.sindercube.mobSoup.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"EquippableComponentMixin",
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
