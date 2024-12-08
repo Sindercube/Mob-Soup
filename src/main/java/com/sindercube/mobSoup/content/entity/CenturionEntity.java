@@ -16,13 +16,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -37,6 +34,16 @@ import net.minecraft.world.World;
 public class CenturionEntity extends AbstractSkeletonEntity {
 
     private static final TrackedData<Boolean> ENRAGED = DataTracker.registerData(CenturionEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+	public double prevCapeX;
+	public double prevCapeY;
+	public double prevCapeZ;
+	public double capeX;
+	public double capeY;
+	public double capeZ;
+
+	public float prevStrideDistance;
+	public float strideDistance;
 
     public CenturionEntity(EntityType<? extends CenturionEntity> entityType, World world) {
         super(entityType, world);
@@ -130,7 +137,69 @@ public class CenturionEntity extends AbstractSkeletonEntity {
 	@Override
     public void tick() {
         super.tick();
-    }
+		this.updateCapeAngles();
+	}
+
+	@Override
+	public void tickRiding() {
+		super.tickRiding();
+		this.prevStrideDistance = this.strideDistance;
+		this.strideDistance = 0.0F;
+	}
+
+	@Override
+	public void tickMovement() {
+		super.tickMovement();
+		this.prevStrideDistance = this.strideDistance;
+		float speed = 0;
+		if (this.isOnGround() && !this.isDead() && !this.isSwimming()) {
+			speed = Math.min(0.1F, (float)this.getVelocity().horizontalLength());
+		}
+		this.strideDistance += (speed - this.strideDistance) * 0.4F;
+	}
+
+	private void updateCapeAngles() {
+		this.prevCapeX = this.capeX;
+		this.prevCapeY = this.capeY;
+		this.prevCapeZ = this.capeZ;
+		double d = this.getX() - this.capeX;
+		double e = this.getY() - this.capeY;
+		double f = this.getZ() - this.capeZ;
+		double g = 10.0;
+		if (d > 10.0) {
+			this.capeX = this.getX();
+			this.prevCapeX = this.capeX;
+		}
+
+		if (f > 10.0) {
+			this.capeZ = this.getZ();
+			this.prevCapeZ = this.capeZ;
+		}
+
+		if (e > 10.0) {
+			this.capeY = this.getY();
+			this.prevCapeY = this.capeY;
+		}
+
+		if (d < -10.0) {
+			this.capeX = this.getX();
+			this.prevCapeX = this.capeX;
+		}
+
+		if (f < -10.0) {
+			this.capeZ = this.getZ();
+			this.prevCapeZ = this.capeZ;
+		}
+
+		if (e < -10.0) {
+			this.capeY = this.getY();
+			this.prevCapeY = this.capeY;
+		}
+
+		this.capeX += d * 0.25;
+		this.capeZ += f * 0.25;
+		this.capeY += e * 0.25;
+	}
 
     @Override
     protected SoundEvent getAmbientSound() {
