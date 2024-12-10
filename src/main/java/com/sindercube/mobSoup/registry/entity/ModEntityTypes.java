@@ -1,4 +1,4 @@
-package com.sindercube.mobSoup.registry;
+package com.sindercube.mobSoup.registry.entity;
 
 import com.sindercube.mobSoup.MobSoup;
 import com.sindercube.mobSoup.content.entity.CenturionEntity;

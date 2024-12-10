@@ -17,8 +17,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.EquippableComponent;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 
 public class CenturionCapeFeatureRenderer extends FeatureRenderer<CenturionState, CenturionModel> {
+
+	public static Identifier TEXTURE = MobSoup.of("textures/entity/cape/centurion.png");
 
 	private final BipedEntityModel<CenturionState> model;
 	private final EquipmentModelLoader equipmentModelLoader;
@@ -44,7 +47,7 @@ public class CenturionCapeFeatureRenderer extends FeatureRenderer<CenturionState
 		if (state.invisible) return;
 		matrices.push();
 		if (this.hasCustomModelForLayer(state.equippedChestStack)) matrices.translate(0.0F, -0.053125F, 0.06875F);
-		VertexConsumer vertexConsumer = vertices.getBuffer(RenderLayer.getEntitySolid(MobSoup.of("capes/centurion.json")));
+		VertexConsumer vertexConsumer = vertices.getBuffer(RenderLayer.getEntitySolid(TEXTURE));
 		this.getContextModel().copyTransforms(this.model);
 		this.model.setAngles(state);
 		this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);

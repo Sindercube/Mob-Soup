@@ -1,2 +1,12 @@
 {
+	"item.ticking_effects.any": "While equipped:",
+	"item.ticking_effects.armor": "While worn:",
+	"item.ticking_effects.body": "While equipped:",
+	"item.ticking_effects.chest": "While on Body:",
+	"item.ticking_effects.feet": "While on Feet:",
+	"item.ticking_effects.hand": "While held:",
+	"item.ticking_effects.head": "While on Head:",
+	"item.ticking_effects.legs": "While on Legs:",
+	"item.ticking_effects.mainhand": "While in Main Hand:",
+	"item.ticking_effects.offhand": "While in Off Hand:"
 }

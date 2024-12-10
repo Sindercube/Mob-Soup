@@ -15,8 +15,19 @@ public class JavelinAttackGoal extends ProjectileAttackGoal {
 		this.entity = (CenturionEntity) entity;
 	}
 
+	@Override
 	public boolean canStart() {
-		return super.canStart() && this.entity.getMainHandStack().isOf(ModItems.JAVELIN);
+		boolean hasJavelin = this.entity.getMainHandStack().isOf(ModItems.JAVELIN);
+		if (!hasJavelin) {
+//			this.entity.setPhase(AbstractCenturionEntity.Phase.ATTACK_ENRAGED);
+			return false;
+		}
+		return super.canStart();
+	}
+
+	@Override
+	public boolean shouldContinue() {
+		return this.canStart();
 	}
 
 	public void start() {
@@ -29,6 +40,7 @@ public class JavelinAttackGoal extends ProjectileAttackGoal {
 		super.stop();
 		this.entity.clearActiveItem();
 		this.entity.setAttacking(false);
+//		if (this.entity.getMainHandStack().isEmpty()) this.entity.setPhase(AbstractCenturionEntity.Phase.RESTOCK_GROUND);
 	}
 
 }

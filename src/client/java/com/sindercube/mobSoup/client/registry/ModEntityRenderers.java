@@ -1,30 +1,36 @@
 package com.sindercube.mobSoup.client.registry;
 
-import com.sindercube.mobSoup.MobSoup;
 import com.sindercube.mobSoup.client.content.entity.model.CenturionModel;
 import com.sindercube.mobSoup.client.content.entity.model.JavelinModel;
 import com.sindercube.mobSoup.client.content.entity.renderer.CenturionRenderer;
 import com.sindercube.mobSoup.client.content.entity.renderer.JavelinRenderer;
-import com.sindercube.mobSoup.client.content.model.renderer.JavelinModelRenderer;
-import com.sindercube.mobSoup.registry.ModEntityTypes;
+import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.item.model.special.SpecialModelTypes;
-import net.minecraft.client.render.item.model.special.TridentModelRenderer;
+import net.minecraft.client.model.Dilation;
+import net.minecraft.client.model.TexturedModelData;
+import net.minecraft.client.render.entity.model.ArmorEntityModel;
 
 public class ModEntityRenderers {
 
-	public static final EntityModelLayer CENTURION_LAYER = new EntityModelLayer(MobSoup.of("centurion"), "main");
-	public static final EntityModelLayer JAVELIN_LAYER = new EntityModelLayer(MobSoup.of("javelin"), "main");
+	private static final Dilation ARMOR_DILATION = new Dilation(1.0F);
+	private static final Dilation HAT_DILATION = new Dilation(0.5F);
 
 	public static void init() {
-		SpecialModelTypes.ID_MAPPER.put(MobSoup.of("javelin"), JavelinModelRenderer.Unbaked.CODEC);
+		EntityRendererRegistry.register(ModEntityTypes.CENTURION, context -> new CenturionRenderer(context, ModEntityModelLayers.CENTURION, ModEntityModelLayers.CENTURION_INNER_ARMOR, ModEntityModelLayers.CENTURION_OUTER_ARMOR));
+		EntityRendererRegistry.register(ModEntityTypes.JAVELIN, context -> new JavelinRenderer(context, ModEntityModelLayers.JAVELIN));
+		EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.CENTURION, CenturionModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.CENTURION_INNER_ARMOR, ModEntityRenderers::innerArmor);
+		EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.CENTURION_OUTER_ARMOR, ModEntityRenderers::outerArmor);
+		EntityModelLayerRegistry.registerModelLayer(ModEntityModelLayers.JAVELIN, JavelinModel::getTexturedModelData);
+	}
 
-		EntityRendererRegistry.register(ModEntityTypes.CENTURION, context -> new CenturionRenderer(context, CENTURION_LAYER));
-		EntityRendererRegistry.register(ModEntityTypes.JAVELIN, context -> new JavelinRenderer(context, JAVELIN_LAYER));
-		EntityModelLayerRegistry.registerModelLayer(CENTURION_LAYER, CenturionModel::getTexturedModelData);
-		EntityModelLayerRegistry.registerModelLayer(JAVELIN_LAYER, JavelinModel::getTexturedModelData);
+	private static TexturedModelData innerArmor() {
+		return TexturedModelData.of(ArmorEntityModel.getModelData(HAT_DILATION), 64, 32);
+	}
+
+	private static TexturedModelData outerArmor() {
+		return TexturedModelData.of(ArmorEntityModel.getModelData(ARMOR_DILATION), 64, 32);
 	}
 
 }

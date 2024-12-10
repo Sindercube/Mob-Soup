@@ -1,6 +1,5 @@
 package com.sindercube.mobSoup.content.entity.ai.goal;
 
-import com.sindercube.mobSoup.content.entity.CenturionEntity;
 import com.sindercube.mobSoup.content.entity.JavelinEntity;
 import com.sindercube.mobSoup.registry.ModItems;
 import net.minecraft.entity.ai.goal.Goal;
@@ -14,17 +13,19 @@ import java.util.Objects;
 
 public class PickUpJavelinsGoal extends Goal {
 
-	private final CenturionEntity entity;
+	private final AbstractCenturionEntity entity;
 	private JavelinEntity target;
 	private Path path;
 
-	public PickUpJavelinsGoal(CenturionEntity entity) {
+	public PickUpJavelinsGoal(AbstractCenturionEntity entity) {
 		super();
 		this.entity = entity;
 	}
 
     @Override
     public boolean canStart() {
+		System.out.println("a");
+
 		ItemStack javelinStack = this.entity.getMainHandStack();
 		if (javelinStack.isOf(ModItems.JAVELIN) && javelinStack.getCount() == javelinStack.getMaxCount()) return false;
 
@@ -35,6 +36,7 @@ public class PickUpJavelinsGoal extends Goal {
 			javelin -> Objects.equals(javelin.getOwner(), this.entity)
 		);
 		if (nearbyJavelins.isEmpty()) {
+			this.entity.setPhase(AbstractCenturionEntity.Phase.RESTOCK_TARGET);
 			return false;
 		}
 
@@ -44,11 +46,13 @@ public class PickUpJavelinsGoal extends Goal {
 
 		this.path = path;
 		this.target = javelin;
+		System.out.println("a");
 		return true;
 	}
 
 	@Override
 	public boolean shouldContinue() {
+		System.out.println("test");
 		return this.target != null || this.path != null;
 	}
 
@@ -65,6 +69,7 @@ public class PickUpJavelinsGoal extends Goal {
 
 	@Override
 	public void tick() {
+		System.out.println("e");
 		if (this.target == null) return;
 		if (!this.target.isInRange(this.entity, 1)) return;
 		if (!(this.target.getWorld() instanceof ServerWorld world)) return;

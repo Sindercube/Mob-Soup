@@ -3,6 +3,7 @@ package com.sindercube.mobSoup.client.content.model.renderer;
 import com.mojang.serialization.MapCodec;
 import com.sindercube.mobSoup.client.content.entity.model.JavelinModel;
 import com.sindercube.mobSoup.client.content.entity.renderer.JavelinRenderer;
+import com.sindercube.mobSoup.client.registry.ModEntityModelLayers;
 import com.sindercube.mobSoup.client.registry.ModEntityRenderers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,18 +34,17 @@ public class JavelinModelRenderer implements SimpleSpecialModelRenderer {
 
 	@Environment(EnvType.CLIENT)
 	public record Unbaked() implements SpecialModelRenderer.Unbaked {
-		public static final MapCodec<JavelinModelRenderer.Unbaked> CODEC = MapCodec.unit(new JavelinModelRenderer.Unbaked());
 
-		public Unbaked() {
-		}
+		public static final MapCodec<JavelinModelRenderer.Unbaked> CODEC = MapCodec.unit(new JavelinModelRenderer.Unbaked());
 
 		public MapCodec<JavelinModelRenderer.Unbaked> getCodec() {
 			return CODEC;
 		}
 
 		public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
-			return new JavelinModelRenderer(new JavelinModel(entityModels.getModelPart(ModEntityRenderers.JAVELIN_LAYER)));
+			return new JavelinModelRenderer(new JavelinModel(entityModels.getModelPart(ModEntityModelLayers.JAVELIN)));
 		}
+
 	}
 
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ModArmorMaterials {
 
-    public static final ArmorMaterial CENTURION = new ArmorMaterial(
+    public static final ArmorMaterial GALEA = new ArmorMaterial(
 		33,
 		Map.of(EquipmentType.HELMET, 3),
 		10,

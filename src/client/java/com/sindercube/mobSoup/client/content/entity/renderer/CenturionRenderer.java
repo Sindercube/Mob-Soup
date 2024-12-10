@@ -5,29 +5,31 @@ import com.sindercube.mobSoup.client.content.entity.model.CenturionModel;
 import com.sindercube.mobSoup.client.content.entity.state.CenturionState;
 import com.sindercube.mobSoup.content.entity.CenturionEntity;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.AbstractSkeletonEntityRenderer;
+import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
+import net.minecraft.client.render.entity.model.SkeletonEntityModel;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class CenturionRenderer extends AbstractSkeletonEntityRenderer<CenturionEntity, CenturionState> {
+public class CenturionRenderer extends BipedEntityRenderer<CenturionEntity, CenturionState, CenturionModel> {
 
 	public static final Identifier DEFAULT_TEXTURE = MobSoup.of("textures/entity/centurion/default.png");
 	public static final Identifier ENRAGED_TEXTURE = MobSoup.of("textures/entity/centurion/enraged.png");
 
-	public CenturionRenderer(EntityRendererFactory.Context context, EntityModelLayer layer) {
-		super(context, layer, EntityModelLayers.SKELETON_INNER_ARMOR, EntityModelLayers.SKELETON_OUTER_ARMOR);
-//		this.addFeature((FeatureRenderer)new CenturionCapeFeatureRenderer(
-//			(FeatureRendererContext<CenturionState, CenturionModel>)(Object)this,
-//			context.getEntityModels(),
-//			context.getEquipmentModelLoader()
-//		));
+	public CenturionRenderer(EntityRendererFactory.Context context, EntityModelLayer layer, EntityModelLayer armorInnerLayer, EntityModelLayer armorOuterLayer) {
+		super(context, new CenturionModel(context.getPart(layer)), 0.5F);
+		this.addFeature(new ArmorFeatureRenderer(this, new SkeletonEntityModel(context.getPart(armorInnerLayer)), new SkeletonEntityModel(context.getPart(armorOuterLayer)), context.getEquipmentRenderer()));
+		this.addFeature(new CenturionCapeFeatureRenderer(this, context.getEntityModels(), context.getEquipmentModelLoader()));
 	}
 
 	@Override

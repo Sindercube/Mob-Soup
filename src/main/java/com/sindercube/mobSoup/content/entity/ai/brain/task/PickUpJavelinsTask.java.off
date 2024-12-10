@@ -1,0 +1,35 @@
+package com.sindercube.mobSoup.content.entity.ai.task;
+
+import com.sindercube.mobSoup.content.entity.CenturionEntity;
+import net.minecraft.entity.ai.brain.task.MultiTickTask;
+import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.server.world.ServerWorld;
+
+public class PickUpJavelinsTask implements Task<CenturionEntity> {
+
+	@Override
+	public String getName() {
+		return "";
+	}
+
+	@Override
+	public MultiTickTask.Status getStatus() {
+		return null;
+	}
+
+	@Override
+	public boolean tryStarting(ServerWorld world, CenturionEntity entity, long time) {
+		return false;
+	}
+
+	@Override
+	public void tick(ServerWorld world, CenturionEntity entity, long time) {
+
+	}
+
+	@Override
+	public void stop(ServerWorld world, CenturionEntity entity, long time) {
+
+	}
+
+}

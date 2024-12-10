@@ -1,6 +1,6 @@
 package com.sindercube.mobSoup.content.entity;
 
-import com.sindercube.mobSoup.registry.ModEntityTypes;
+import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
 import com.sindercube.mobSoup.registry.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
