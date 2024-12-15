@@ -1,6 +1,7 @@
 package com.sindercube.mobSoup.content.entity;
 
 import com.sindercube.mobSoup.registry.ModItems;
+import com.sindercube.mobSoup.registry.ModSoundEvents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -65,43 +66,43 @@ public class CenturionEntity extends AbstractCenturionEntity {
 		this.prevCapeX = this.capeX;
 		this.prevCapeY = this.capeY;
 		this.prevCapeZ = this.capeZ;
-		double d = this.getX() - this.capeX;
-		double e = this.getY() - this.capeY;
-		double f = this.getZ() - this.capeZ;
-		double g = 10.0;
-		if (d > 10.0) {
+		double x = this.getX() - this.capeX;
+		double y = this.getY() - this.capeY;
+		double z = this.getZ() - this.capeZ;
+		int max = 10;
+		if (x > max) {
 			this.capeX = this.getX();
 			this.prevCapeX = this.capeX;
 		}
 
-		if (f > 10.0) {
+		if (z > max) {
 			this.capeZ = this.getZ();
 			this.prevCapeZ = this.capeZ;
 		}
 
-		if (e > 10.0) {
+		if (y > max) {
 			this.capeY = this.getY();
 			this.prevCapeY = this.capeY;
 		}
 
-		if (d < -10.0) {
+		if (x < -max) {
 			this.capeX = this.getX();
 			this.prevCapeX = this.capeX;
 		}
 
-		if (f < -10.0) {
+		if (z < -max) {
 			this.capeZ = this.getZ();
 			this.prevCapeZ = this.capeZ;
 		}
 
-		if (e < -10.0) {
+		if (y < -max) {
 			this.capeY = this.getY();
 			this.prevCapeY = this.capeY;
 		}
 
-		this.capeX += d * 0.25;
-		this.capeZ += f * 0.25;
-		this.capeY += e * 0.25;
+		this.capeX += x * 0.25;
+		this.capeZ += z * 0.25;
+		this.capeY += y * 0.25;
 	}
 
     @Override
@@ -124,9 +125,14 @@ public class CenturionEntity extends AbstractCenturionEntity {
         return SoundEvents.ENTITY_SKELETON_STEP;
     }
 
-    @Override
+	@Override
+	protected SoundEvent getRangedAttackReadySound() {
+		return ModSoundEvents.ENTITY_CENTURION_ATTACK_RANGED_READY;
+	}
+
+	@Override
     protected void dropEquipment(ServerWorld world, DamageSource source, boolean causedByPlayer) {
-        super.dropEquipment(world, source, causedByPlayer);
+//        super.dropEquipment(world, source, causedByPlayer);
         Entity entity = source.getAttacker();
         if (entity instanceof CreeperEntity creeperEntity) {
             if (creeperEntity.shouldDropHead()) {

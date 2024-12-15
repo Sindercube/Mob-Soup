@@ -1,0 +1,8 @@
+{
+	"entity.centurion.attack_ranged.ready": {
+		"sounds": [
+			"item/crossbow/loading_end"
+		],
+		"subtitle": "subtitles.mob_soup.entity.centurion.attack_ranged.ready"
+	}
+}

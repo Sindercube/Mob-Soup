@@ -1,6 +1,6 @@
 package com.sindercube.mobSoup.content.entity;
 
-import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
+import com.sindercube.mobSoup.registry.ModEntityTypes;
 import com.sindercube.mobSoup.registry.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -30,7 +30,7 @@ public class JavelinEntity extends PersistentProjectileEntity {
 		super(entityType, world);
 	}
 
-	public JavelinEntity(World world, LivingEntity owner, ItemStack stack) {
+	public JavelinEntity(World world, AbstractCenturionEntity owner, ItemStack stack) {
 		super(ModEntityTypes.JAVELIN, owner, world, stack, null);
 		this.dataTracker.set(ENCHANTED, stack.hasGlint());
 	}
@@ -40,7 +40,12 @@ public class JavelinEntity extends PersistentProjectileEntity {
 		this.dataTracker.set(ENCHANTED, stack.hasGlint());
 	}
 
-	@Override
+    public JavelinEntity(ServerWorld world, LivingEntity owner, ItemStack stack) {
+		super(ModEntityTypes.JAVELIN, owner, world, stack, null);
+		this.dataTracker.set(ENCHANTED, stack.hasGlint());
+    }
+
+    @Override
 	protected void initDataTracker(DataTracker.Builder builder) {
 		super.initDataTracker(builder);
 		builder.add(ENCHANTED, false);
@@ -84,7 +89,7 @@ public class JavelinEntity extends PersistentProjectileEntity {
 				});
 			}
 
-			if (target instanceof LivingEntity livingEntity) {
+			if (target instanceof AbstractCenturionEntity livingEntity) {
 				this.knockback(livingEntity, source);
 				this.onHit(livingEntity);
 			}
@@ -98,7 +103,7 @@ public class JavelinEntity extends PersistentProjectileEntity {
 	@Override
 	protected void onBlockHitEnchantmentEffects(ServerWorld world, BlockHitResult result, ItemStack stack) {
 		Vec3d pos = result.getBlockPos().clampToWithin(result.getPos());
-		LivingEntity owner = this.getOwner() instanceof LivingEntity livingEntity ? livingEntity : null;
+		AbstractCenturionEntity owner = this.getOwner() instanceof AbstractCenturionEntity livingEntity ? livingEntity : null;
 		EnchantmentHelper.onHitBlock(world, stack, owner, this, null, pos, world.getBlockState(result.getBlockPos()), item ->
 			this.kill(world)
 		);

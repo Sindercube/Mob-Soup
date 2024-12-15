@@ -1,5 +1,6 @@
 package com.sindercube.mobSoup.content.entity.ai.goal;
 
+import com.sindercube.mobSoup.content.entity.AbstractCenturionEntity;
 import com.sindercube.mobSoup.content.entity.JavelinEntity;
 import com.sindercube.mobSoup.registry.ModItems;
 import net.minecraft.entity.ai.goal.Goal;
@@ -7,6 +8,7 @@ import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Box;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,21 +26,25 @@ public class PickUpJavelinsGoal extends Goal {
 
     @Override
     public boolean canStart() {
-		System.out.println("a");
+		System.out.println("test");
 
 		ItemStack javelinStack = this.entity.getMainHandStack();
-		if (javelinStack.isOf(ModItems.JAVELIN) && javelinStack.getCount() == javelinStack.getMaxCount()) return false;
+		if (javelinStack.isOf(ModItems.JAVELIN) && javelinStack.getCount() == javelinStack.getMaxCount()) {
+			this.entity.setPhase(AbstractCenturionEntity.Phase.ATTACK_RANGED);
+			return false;
+		}
+
+		System.out.println("test");
 
 		double range = this.entity.getAttributeValue(EntityAttributes.FOLLOW_RANGE);
-		List<JavelinEntity> nearbyJavelins = this.entity.getWorld().getEntitiesByClass(
-			JavelinEntity.class,
-			this.entity.getBoundingBox().expand(range, 8.0, range),
-			javelin -> Objects.equals(javelin.getOwner(), this.entity)
-		);
+		Box box = this.entity.getBoundingBox().expand(range, 8, range);
+		List<JavelinEntity> nearbyJavelins = this.entity.getWorld().getEntitiesByClass(JavelinEntity.class, box, this.entity::ownsProjectile);
 		if (nearbyJavelins.isEmpty()) {
 			this.entity.setPhase(AbstractCenturionEntity.Phase.RESTOCK_TARGET);
 			return false;
 		}
+
+		System.out.println("test");
 
 		JavelinEntity javelin = nearbyJavelins.getFirst();
 		Path path = this.entity.getNavigation().findPathTo(javelin, 1);
@@ -46,13 +52,11 @@ public class PickUpJavelinsGoal extends Goal {
 
 		this.path = path;
 		this.target = javelin;
-		System.out.println("a");
 		return true;
 	}
 
 	@Override
 	public boolean shouldContinue() {
-		System.out.println("test");
 		return this.target != null || this.path != null;
 	}
 
@@ -69,7 +73,6 @@ public class PickUpJavelinsGoal extends Goal {
 
 	@Override
 	public void tick() {
-		System.out.println("e");
 		if (this.target == null) return;
 		if (!this.target.isInRange(this.entity, 1)) return;
 		if (!(this.target.getWorld() instanceof ServerWorld world)) return;

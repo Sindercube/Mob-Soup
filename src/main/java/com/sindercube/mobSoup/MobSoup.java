@@ -1,10 +1,6 @@
 package com.sindercube.mobSoup;
 
 import com.sindercube.mobSoup.registry.*;
-import com.sindercube.mobSoup.registry.entity.ModEntityActivities;
-import com.sindercube.mobSoup.registry.entity.ModEntityMemories;
-import com.sindercube.mobSoup.registry.entity.ModEntitySensors;
-import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -22,13 +18,11 @@ public class MobSoup implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModSoundEvents.init();
 		ModItemComponents.init();
 		ModItems.init();
-		ModEntityActivities.init();
-		ModEntityMemories.init();
-		ModEntitySensors.init();
-		ModTrackedDataTypes.init();
 		ModEntityTypes.init();
+		ModTrackedDataTypes.init();
 	}
 
 }

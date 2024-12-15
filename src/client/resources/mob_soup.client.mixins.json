@@ -3,6 +3,7 @@
 	"package": "com.sindercube.mobSoup.client.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
+		"DebugRendererMixin",
 		"PlayerEntityRendererMixin",
 		"SpecialModelTypesMixin"
 	],

@@ -8,5 +8,7 @@
 	"item.ticking_effects.head": "While on Head:",
 	"item.ticking_effects.legs": "While on Legs:",
 	"item.ticking_effects.mainhand": "While in Main Hand:",
-	"item.ticking_effects.offhand": "While in Off Hand:"
+	"item.ticking_effects.offhand": "While in Off Hand:",
+
+	"subtitles.mob_soup.entity.centurion.attack_ranged.ready": "Centurion attack ready"
 }

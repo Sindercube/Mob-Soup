@@ -20,7 +20,7 @@ public class PickJavelinsFromTargetGoal extends MeleeAttackGoal {
 		if (!(livingTarget instanceof JavelinPorcupineEntity porcupine)) return;
 
 		if (porcupine.getStuckJavelinCount() <= 0) {
-//			this.entity.setPhase(AbstractCenturionEntity.Phase.ATTACK_RANGED);
+			this.entity.setPhase(AbstractCenturionEntity.Phase.ATTACK_RANGED);
 			return;
 		}
 

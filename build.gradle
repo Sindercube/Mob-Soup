@@ -1,6 +1,5 @@
 plugins {
 	id 'fabric-loom' version '1.9-SNAPSHOT'
-	id 'maven-publish'
 }
 
 base.archivesName = mod_id
@@ -11,7 +10,7 @@ loom {
 	accessWidenerPath = file("src/main/resources/mob_soup.accesswidener")
 	splitEnvironmentSourceSets()
 	mods {
-		"mob_soup" {
+		mob_soup {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}

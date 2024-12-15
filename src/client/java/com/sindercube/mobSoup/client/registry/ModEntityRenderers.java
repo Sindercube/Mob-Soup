@@ -4,7 +4,7 @@ import com.sindercube.mobSoup.client.content.entity.model.CenturionModel;
 import com.sindercube.mobSoup.client.content.entity.model.JavelinModel;
 import com.sindercube.mobSoup.client.content.entity.renderer.CenturionRenderer;
 import com.sindercube.mobSoup.client.content.entity.renderer.JavelinRenderer;
-import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
+import com.sindercube.mobSoup.registry.ModEntityTypes;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.model.Dilation;

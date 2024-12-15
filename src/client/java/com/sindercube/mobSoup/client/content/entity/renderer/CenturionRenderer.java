@@ -4,22 +4,18 @@ import com.sindercube.mobSoup.MobSoup;
 import com.sindercube.mobSoup.client.content.entity.model.CenturionModel;
 import com.sindercube.mobSoup.client.content.entity.state.CenturionState;
 import com.sindercube.mobSoup.content.entity.CenturionEntity;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.AbstractSkeletonEntityRenderer;
+import com.sindercube.mobSoup.registry.ModItems;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.SkeletonEntityModel;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
-import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 
 public class CenturionRenderer extends BipedEntityRenderer<CenturionEntity, CenturionState, CenturionModel> {
 
@@ -53,9 +49,13 @@ public class CenturionRenderer extends BipedEntityRenderer<CenturionEntity, Cent
 		state.capeLean2 = (float)(d * i - f * h) * 100.0F;
 		state.capeLean2 = MathHelper.clamp(state.capeLean2, -20.0F, 20.0F);
 		float j = MathHelper.lerp(tickDelta, player.prevStrideDistance, player.strideDistance);
-//		float k = MathHelper.lerp(tickDelta, player.lastDistanceMoved, player.distanceMoved);
-		float k = 1;
-		state.capeFlap += MathHelper.sin(k * 6.0F) * 32.0F * j;
+		state.capeFlap += MathHelper.sin(6.0F) * 32.0F * j;
+	}
+
+	@Override
+	protected BipedEntityModel.ArmPose getArmPose(CenturionEntity entity, Arm arm) {
+		ItemStack stack = entity.getStackInArm(arm);
+		return entity.getMainArm() == arm && entity.isAttacking() && stack.isOf(ModItems.JAVELIN) ? BipedEntityModel.ArmPose.THROW_SPEAR : BipedEntityModel.ArmPose.EMPTY;
 	}
 
 	@Override

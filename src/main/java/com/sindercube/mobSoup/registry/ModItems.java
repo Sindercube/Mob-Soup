@@ -4,7 +4,6 @@ import com.sindercube.mobSoup.MobSoup;
 import com.sindercube.mobSoup.content.item.GaleaItem;
 import com.sindercube.mobSoup.content.item.JavelinItem;
 import com.sindercube.mobSoup.content.item.ScutumItem;
-import com.sindercube.mobSoup.registry.entity.ModEntityTypes;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
